@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QLineEdit, QPushButton, QTextEdit, QVBoxLayout
-from PyQt5.QtGui import QFont, QColor, QPalette
+from PyQt5.QtGui import QPixmap, QFont, QBrush, QPalette
 from PyQt5.QtCore import Qt
 from PyQt5 import QtGui
 from PL import optimal_electricity_supply
@@ -12,7 +12,7 @@ class ElectricitySupplyApp(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.initUI()
-        self.setWindowIcon(QtGui.QIcon('Star.png'))
+        self.setWindowIcon(QtGui.QIcon('sus.png'))
         self.setWindowTitle("Optimisation de l'approvisionnement en électricité")
 
     def initUI(self):
@@ -25,10 +25,10 @@ class ElectricitySupplyApp(QMainWindow):
         self.resize(window_width, window_height)
         self.move(x_coordinate, y_coordinate)
 
-        # Apply background color to window
+        # Apply background image to window using stylesheet
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(QPalette.Window, QColor("#1E1E1E"))  # Dark background color
+        palette.setBrush(QPalette.Window, QBrush(QPixmap("bg.jpg").scaled(self.size())))
         self.setPalette(palette)
 
         # Project Name in the middle at the top
@@ -109,8 +109,7 @@ class ElectricitySupplyApp(QMainWindow):
 
         # Apply styles to labels
         label_color = "#FFFFFF"  # White color
-        label_background_color = "#1E1E1E"  # Dark background color
-        label_style = f"color: {label_color}; background-color: {label_background_color};"
+        label_style = f"color: {label_color};"
         label_font = font
         self.centralLabel.setStyleSheet(label_style)
         self.centralLabel.setFont(label_font)

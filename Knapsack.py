@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QTextEdit
-from PyQt5.QtGui import QFont, QColor, QPalette
+from PyQt5.QtGui import QPixmap, QFont, QBrush, QPalette
 from PyQt5.QtCore import Qt
 from PyQt5 import QtGui
 
@@ -10,6 +10,8 @@ class KnapsackApp(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
+        self.setWindowIcon(QtGui.QIcon('sus.png'))
+        self.setWindowTitle("Knapsack Problem Solver")
 
     def initUI(self):
         self.setWindowTitle("Knapsack Problem Solver")
@@ -23,10 +25,10 @@ class KnapsackApp(QWidget):
         self.resize(window_width, window_height)
         self.move(x_coordinate, y_coordinate)
 
-        # Apply background color to window
+        # Apply background image to window using stylesheet
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(QPalette.Window, QColor("#1E1E1E"))  # Light background color
+        palette.setBrush(QPalette.Window, QBrush(QPixmap("bg.jpg").scaled(self.size())))
         self.setPalette(palette)
 
         # Project Name at the top
@@ -89,8 +91,7 @@ class KnapsackApp(QWidget):
 
         # Apply styles to labels
         label_color = "#FFFFFF"  # White color
-        label_background_color = "#1E1E1E"  # Dark background color
-        label_style = f"color: {label_color}; background-color: {label_background_color};"
+        label_style = f"color: {label_color};"
         label_font = font
         self.valuesLabel.setStyleSheet(label_style)
         self.valuesLabel.setFont(label_font)

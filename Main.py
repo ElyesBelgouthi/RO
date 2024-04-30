@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QHBoxLayout, QVBoxLayout, QWidget, QStackedWidget
-from PyQt5.QtGui import QPixmap, QFont, QColor, QPalette
+from PyQt5.QtGui import QPixmap, QFont, QBrush, QPalette
 from PyQt5.QtCore import Qt
 from PyQt5 import QtGui
 import subprocess
@@ -12,7 +12,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowIcon(QtGui.QIcon('Star.png'))
+        self.setWindowIcon(QtGui.QIcon('sus.png'))
         self.setWindowTitle("PL et PLNE avec Gurobi")
 
         # Set window size and position
@@ -23,10 +23,10 @@ class MainWindow(QMainWindow):
         y_coordinate = int((screen_geometry.height() / 2) - (window_height / 2))
         self.setGeometry(x_coordinate, y_coordinate, window_width, window_height)
 
-        # Apply background color to window
+        # Apply background image to window using stylesheet
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(QPalette.Window, QColor("#1E1E1E"))  # Dark background color
+        palette.setBrush(QPalette.Window, QBrush(QPixmap("bg.jpg").scaled(self.size())))
         self.setPalette(palette)
 
         # Project Name in the middle at the top
