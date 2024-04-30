@@ -26,7 +26,8 @@ class MainWindow(QMainWindow):
         # Apply background image to window using stylesheet
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setBrush(QPalette.Window, QBrush(QPixmap("bg.jpg").scaled(self.size())))
+        pixmap = QPixmap("bg.jpg").scaledToWidth(self.width()).scaledToHeight(self.height())  # Scale pixmap to window width
+        palette.setBrush(QPalette.Window, QBrush(pixmap))
         self.setPalette(palette)
 
         # Project Name in the middle at the top
