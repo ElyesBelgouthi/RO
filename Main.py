@@ -61,7 +61,7 @@ class MainWindow(QMainWindow):
             self.exercise_layout.addWidget(exercise_button)
 
         # Exit Button
-        self.exit_button = QPushButton("Exit", self)
+        self.exit_button = QPushButton("Sortir", self)
         self.exit_button.setFont(QFont("Trebuchet MS", 16, QFont.Bold))
         self.exit_button.setStyleSheet("background-color: #DC3545; color: white; border: 2px solid #DC3545; border-radius: 10px;")
         self.exit_button.clicked.connect(exit_program)

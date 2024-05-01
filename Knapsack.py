@@ -11,10 +11,10 @@ class KnapsackApp(QWidget):
         super().__init__()
         self.initUI()
         self.setWindowIcon(QtGui.QIcon('sus.png'))
-        self.setWindowTitle("Knapsack Problem Solver")
+        self.setWindowTitle("Problème de sac à dos")
 
     def initUI(self):
-        self.setWindowTitle("Knapsack Problem Solver")
+        self.setWindowTitle("Problème de sac à dos")
 
         # Set window size and position
         window_width = 1000
@@ -34,26 +34,26 @@ class KnapsackApp(QWidget):
         self.setPalette(palette)
 
         # Project Name at the top
-        self.project_name = QLabel("Knapsack Problem Solver", self)
+        self.project_name = QLabel("Problème de sac à dos", self)
         self.project_name.setStyleSheet("color: #FFD700; font-family: Trebuchet MS; font-size: 24px;")  # Dark gray color, Arial font
         self.project_name.setAlignment(Qt.AlignCenter)
 
         # Description of the project
-        self.project_description = QLabel("Enter the data:", self)
+        self.project_description = QLabel("Saisir les données:", self)
         self.project_description.setStyleSheet(
             "color: #FFFFFF; font-family: Trebuchet MS; font-size: 18px;")
         self.project_description.setAlignment(Qt.AlignCenter)
 
         # Labels and LineEdits for input data
-        self.valuesLabel = QLabel("Values (comma-separated):", self)
+        self.valuesLabel = QLabel("Valeurs (séparés par des virgules):", self)
         self.valuesEdit = QLineEdit(self)
-        self.weightsLabel = QLabel("Weights (comma-separated):", self)
+        self.weightsLabel = QLabel("Poids (séparés par des virgules):", self)
         self.weightsEdit = QLineEdit(self)
-        self.capacityLabel = QLabel("Knapsack Capacity:", self)
+        self.capacityLabel = QLabel("Capacité du sac à dos:", self)
         self.capacityEdit = QLineEdit(self)
 
         # Button to trigger optimization
-        self.solveButton = QPushButton("Solve Knapsack", self)
+        self.solveButton = QPushButton("Optimiser", self)
 
         # TextEdit to display results
         self.resultTextEdit = QTextEdit(self)
@@ -134,8 +134,10 @@ class KnapsackApp(QWidget):
         total_value, selected_items = solve_knapsack(values, weights, capacity)
 
         # Display results
-        result_str = f"Total Value: {total_value}\n"
-        result_str += "Selected Items: " + ", ".join(str(i) for i in selected_items)
+        result_str = f"Valeur Totale: {int(total_value)}\n"
+        result_str += "Les produits choisis:\n"
+        result_str += "\n".join(f"{value} de produit {key + 1}" for key, value in selected_items.items())
+        result_str += "\n"
         self.resultTextEdit.setPlainText(result_str)
 
 if __name__ == '__main__':
