@@ -25,5 +25,4 @@ def optimal_transportation_supply(centrales, villes, offres, demandes, couts_tra
                 result_str += f"{x[c, v].x:.2f} {unite_matiere} de {matiere} de la centrale {c} sont transportes a la ville {v}\n"
     result_str += f"Cout total : {obj.getValue():.2f} {monnaie}"
 
-
     return obj.getValue(), result_str

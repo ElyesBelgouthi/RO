@@ -216,36 +216,39 @@ class TransportSupplyApp(QMainWindow):
                     self.matrixTable.setItem(i, j, QTableWidgetItem("0"))
 
     def optimize(self):
-        centrales = self.centralEdit.text().split(',')
-        villes = self.cityEdit.text().split(',')
-        monnaie = self.currencyEdit.text()
-        matiere = self.materialEdit.text()
-        unite_matiere = self.materialUnitEdit.text()
+        try:
+            centrales = self.centralEdit.text().split(',')
+            villes = self.cityEdit.text().split(',')
+            monnaie = self.currencyEdit.text()
+            matiere = self.materialEdit.text()
+            unite_matiere = self.materialUnitEdit.text()
 
-        offres_list = [float(x) for x in self.supplyEdit.text().split(',')]
-        demandes_list = [float(x) for x in self.demandEdit.text().split(',')]
+            offres_list = [float(x) for x in self.supplyEdit.text().split(',')]
+            demandes_list = [float(x) for x in self.demandEdit.text().split(',')]
 
-        all_couts = []
+            all_couts = []
 
-        for i in range(len(centrales)):
-            row = []
-            for j in range(len(villes)):
-                row.append(float(self.matrixTable.item(i, j).text()))
-            all_couts.append(row)
-        print(all_couts)
+            for i in range(len(centrales)):
+                row = []
+                for j in range(len(villes)):
+                    row.append(float(self.matrixTable.item(i, j).text()))
+                all_couts.append(row)
 
-        offres = dict(zip(centrales, offres_list))
-        demandes = dict(zip(villes, demandes_list))
-        couts_transport = {}
-        for i, c in enumerate(centrales):
-            for j, v in enumerate(villes):
-                couts_transport[(c, v)] = all_couts[i][j]
+            offres = dict(zip(centrales, offres_list))
+            demandes = dict(zip(villes, demandes_list))
+            couts_transport = {}
+            for i, c in enumerate(centrales):
+                for j, v in enumerate(villes):
+                    couts_transport[(c, v)] = all_couts[i][j]
 
-        total_cost, resultat = optimal_transportation_supply(centrales, villes, offres, demandes,
-                                                                              couts_transport,matiere,unite_matiere,monnaie)
+            total_cost, resultat = optimal_transportation_supply(centrales, villes, offres, demandes,
+                                                                 couts_transport, matiere, unite_matiere, monnaie)
 
-        self.resultTextEdit.setPlainText(resultat)
-        self.totalCostValueLabel.setText(f"{total_cost:.2f} {monnaie}")
+            self.resultTextEdit.setPlainText(resultat)
+            self.totalCostValueLabel.setText(f"{total_cost:.2f} {monnaie}")
+
+        except Exception as e:
+            QMessageBox.critical(self, "Erreur", "Le modèle est irréalisable. Vérifiez les contraintes.")
 
 
 if __name__ == '__main__':
