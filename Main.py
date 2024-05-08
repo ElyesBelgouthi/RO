@@ -47,7 +47,7 @@ class MainWindow(QMainWindow):
 
         # Example buttons for exercises
         Exercise_names = [
-            "Optimisation de l'approvisionnement en électricité",
+            "Optimisation de l'approvisionnement de transport",
             "Problème de sac à dos",
         ]
         for exercise_name in Exercise_names:
@@ -68,7 +68,7 @@ class MainWindow(QMainWindow):
         self.exit_button.setFixedHeight(50)
 
         # Collaborators listed under each other
-        self.collaborators = QLabel("Présenté par:\nAhmed Karray\nAmine Affi\nElyes Belgouthi\nOmar Maalej", self)
+        self.collaborators = QLabel("Présenté par:\nAhmed Karray\nMed Amine Affi\nElyes Belgouthi\nOmar Maalej", self)
         self.collaborators.setStyleSheet("color: #FFFFFF; font-family: Trebuchet MS; font-size: 18px;")
         self.collaborators.setAlignment(Qt.AlignCenter)  # Center-align the collaborators
 
@@ -82,13 +82,13 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.collaborators)
         layout.setAlignment(Qt.AlignCenter)
         layout.setContentsMargins(20, 20, 20, 20)  # Add margins around the layout
-        layout.setSpacing(20)  # Add spacing between widgets
+        layout.setSpacing(20)
         self.setCentralWidget(central_widget)
 
     def select_exercise(self, exercise_button):
         case = exercise_button.text()
-        if case == "Optimisation de l'approvisionnement en électricité":
-            command = [sys.executable, "./ElectricitySupplyApp.py"]
+        if case == "Optimisation de l'approvisionnement de transport":
+            command = [sys.executable, "./TransportSupplyApp.py"]
             subprocess.run(command)
         elif case == "Problème de sac à dos":
             command = [sys.executable, "./Knapsack.py"]

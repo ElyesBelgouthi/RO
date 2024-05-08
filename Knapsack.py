@@ -16,7 +16,6 @@ class KnapsackApp(QWidget):
     def initUI(self):
         self.setWindowTitle("Problème de sac à dos")
 
-        # Set window size and position
         window_width = 1000
         window_height = 600
         screen_geometry = app.primaryScreen().geometry()
@@ -25,26 +24,22 @@ class KnapsackApp(QWidget):
         self.resize(window_width, window_height)
         self.move(x_coordinate, y_coordinate)
 
-        # Apply background image to window using stylesheet
         self.setAutoFillBackground(True)
         palette = self.palette()
         pixmap = QPixmap("bg.jpg").scaledToWidth(self.width()).scaledToHeight(
-            self.height())  # Scale pixmap to window width
+            self.height())
         palette.setBrush(QPalette.Window, QBrush(pixmap))
         self.setPalette(palette)
 
-        # Project Name at the top
         self.project_name = QLabel("Problème de sac à dos", self)
         self.project_name.setStyleSheet("color: #FFD700; font-family: Trebuchet MS; font-size: 24px;")  # Dark gray color, Arial font
         self.project_name.setAlignment(Qt.AlignCenter)
 
-        # Description of the project
         self.project_description = QLabel("Saisir les données:", self)
         self.project_description.setStyleSheet(
             "color: #FFFFFF; font-family: Trebuchet MS; font-size: 18px;")
         self.project_description.setAlignment(Qt.AlignCenter)
 
-        # Labels and LineEdits for input data
         self.valuesLabel = QLabel("Valeurs (séparés par des virgules):", self)
         self.valuesEdit = QLineEdit(self)
         self.weightsLabel = QLabel("Poids (séparés par des virgules):", self)
@@ -52,14 +47,11 @@ class KnapsackApp(QWidget):
         self.capacityLabel = QLabel("Capacité du sac à dos:", self)
         self.capacityEdit = QLineEdit(self)
 
-        # Button to trigger optimization
         self.solveButton = QPushButton("Optimiser", self)
 
-        # TextEdit to display results
         self.resultTextEdit = QTextEdit(self)
         self.resultTextEdit.setReadOnly(True)
 
-        # Layout
         layout = QVBoxLayout(self)
         layout.addWidget(self.project_name)
         layout.addWidget(self.project_description)
@@ -72,14 +64,11 @@ class KnapsackApp(QWidget):
         layout.addWidget(self.solveButton)
         layout.addWidget(self.resultTextEdit)
 
-        # Connect button click event to optimization function
         self.solveButton.clicked.connect(self.solveKnapsack)
 
-        # Apply styles
         self.applyStyles()
 
     def center(self):
-        # Center the window on the screen
         screen = QtGui.QGuiApplication.primaryScreen()
         screen_geometry = screen.geometry()
         window_geometry = self.frameGeometry()
@@ -88,10 +77,7 @@ class KnapsackApp(QWidget):
         self.move(x_coordinate, y_coordinate)
 
     def applyStyles(self):
-        # Set font and size for all labels and buttons
         font = QFont("Trebuchet MS", 14, QFont.Bold)
-
-        # Apply styles to labels
         label_color = "#FFFFFF"  # White color
         label_style = f"color: {label_color};"
         label_font = font
@@ -102,7 +88,6 @@ class KnapsackApp(QWidget):
         self.capacityLabel.setStyleSheet(label_style)
         self.capacityLabel.setFont(label_font)
 
-        # Apply styles to LineEdits
         lineedit_style = f"color: #FFFFFF; background-color: #2E2E2E; border: 2px solid #808080; border-radius: 5px;"
         lineedit_font = font
         self.valuesEdit.setStyleSheet(lineedit_style)
@@ -112,28 +97,23 @@ class KnapsackApp(QWidget):
         self.capacityEdit.setStyleSheet(lineedit_style)
         self.capacityEdit.setFont(lineedit_font)
 
-        # Apply styles to QTextEdit
         textedit_style = f"color: #FFFFFF; background-color: #2E2E2E; border: 2px solid #808080; border-radius: 5px;"
         textedit_font = font
         self.resultTextEdit.setStyleSheet(textedit_style)
         self.resultTextEdit.setFont(textedit_font)
 
-        # Apply styles to QPushButton
         button_style = f"color: #FFFFFF; background-color: #4CAF50; border: 2px solid #4CAF50; border-radius: 5px;"
         button_font = font
         self.solveButton.setStyleSheet(button_style)
         self.solveButton.setFont(button_font)
 
     def solveKnapsack(self):
-        # Retrieve input data
         values = [float(x) for x in self.valuesEdit.text().split(',')]
         weights = [float(x) for x in self.weightsEdit.text().split(',')]
         capacity = float(self.capacityEdit.text())
 
-        # Solve knapsack problem
         total_value, selected_items = solve_knapsack(values, weights, capacity)
 
-        # Display results
         result_str = f"Valeur Totale: {int(total_value)}\n"
         result_str += "Les produits choisis:\n"
         result_str += "\n".join(f"{value} de produit {key + 1}" for key, value in selected_items.items())
