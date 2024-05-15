@@ -13,7 +13,7 @@ class TransportSupplyApp(QMainWindow):
         QMainWindow.__init__(self)
         self.initUI()
         self.setWindowIcon(QtGui.QIcon('sus.png'))
-        self.setWindowTitle("Optimisation de l'approvisionnement de transport")
+        self.setWindowTitle("Optimisation de l'approvisionnement en transport")
 
     def initUI(self):
         window_width = 1000
@@ -30,7 +30,7 @@ class TransportSupplyApp(QMainWindow):
         palette.setBrush(QPalette.Window, QBrush(pixmap))
         self.setPalette(palette)
 
-        self.project_name = QLabel("Optimisation de l'approvisionnement de transport", self)
+        self.project_name = QLabel("Optimisation de l'approvisionnement en transport", self)
         self.project_name.setStyleSheet(
             "color: #FFD700; font-family: Trebuchet MS; font-size: 28px;")  # Gold color, Impact font
         self.project_name.setAlignment(Qt.AlignCenter)

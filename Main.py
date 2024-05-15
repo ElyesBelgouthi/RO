@@ -47,7 +47,7 @@ class MainWindow(QMainWindow):
 
         # Example buttons for exercises
         Exercise_names = [
-            "Optimisation de l'approvisionnement de transport",
+            "Optimisation de l'approvisionnement en transport",
             "Problème de sac à dos",
         ]
         for exercise_name in Exercise_names:
@@ -87,7 +87,7 @@ class MainWindow(QMainWindow):
 
     def select_exercise(self, exercise_button):
         case = exercise_button.text()
-        if case == "Optimisation de l'approvisionnement de transport":
+        if case == "Optimisation de l'approvisionnement en transport":
             command = [sys.executable, "./TransportSupplyApp.py"]
             subprocess.run(command)
         elif case == "Problème de sac à dos":
