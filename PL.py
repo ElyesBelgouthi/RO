@@ -1,28 +1,34 @@
 import gurobipy as gp
 from gurobipy import GRB
 
+def solve_lp(variable_names, c, A, b, sense, objective_type=GRB.MINIMIZE):
+    model = gp.Model("generic_lp")
 
-def optimal_transportation_supply(centrales, villes, offres, demandes, couts_transport, matiere, unite_matiere, monnaie):
-    model = gp.Model("Probleme de transport")
+    n = len(c)
+    x = model.addVars(variable_names, name="x", lb=0)
+    model.setObjective(gp.quicksum(c[i] * x[variable_names[i]] for i in range(n)), objective_type)
 
-    x = model.addVars(centrales, villes, vtype=GRB.CONTINUOUS, name="x")
-
-    obj = gp.quicksum(x[c, v] * couts_transport[c, v] for c in centrales for v in villes)
-    model.setObjective(obj, GRB.MINIMIZE)
-
-    for c in centrales:
-        model.addConstr(gp.quicksum(x[c, v] for v in villes) <= offres[c], name=f"Contrainte capacite {c}")
-
-    for v in villes:
-        model.addConstr(gp.quicksum(x[c, v] for c in centrales) >= demandes[v], name=f"Contrainte demande {v}")
+    for i in range(len(b)):
+        if sense[i] == '<=':
+            model.addConstr(gp.quicksum(A[i][j] * x[variable_names[j]] for j in range(n)) <= b[i], name=f"constraint_{i}")
+        elif sense[i] == '>=':
+            model.addConstr(gp.quicksum(A[i][j] * x[variable_names[j]] for j in range(n)) >= b[i], name=f"constraint_{i}")
+        elif sense[i] == '==':
+            model.addConstr(gp.quicksum(A[i][j] * x[variable_names[j]] for j in range(n)) == b[i], name=f"constraint_{i}")
+        else:
+            raise ValueError(f"Invalid constraint sense: {sense[i]}")
 
     model.optimize()
 
-    result_str = "Solution optimale :\n"
-    for c in centrales:
-        for v in villes:
-            if x[c, v].x > 0:
-                result_str += f"{x[c, v].x:.2f} {unite_matiere} de {matiere} de la centrale {c} sont transportes a la ville {v}\n"
-    result_str += f"Cout total : {obj.getValue():.2f} {monnaie}"
+    if model.status == GRB.OPTIMAL:
+        solution = {
+            "objective_value": model.objVal,
+            "variables": {v.varName: v.x for v in model.getVars()}
+        }
+    else:
+        solution = {
+            "objective_value": None,
+            "variables": None
+        }
 
-    return obj.getValue(), result_str
+    return solution
